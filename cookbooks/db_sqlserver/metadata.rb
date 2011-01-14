@@ -12,7 +12,8 @@ recipe "db_sqlserver::backup_to_s3", "Backs up database to S3."
 recipe "db_sqlserver::restore", "Restores database from a local machine directory."
 recipe "db_sqlserver::restore_once", "Restores database from a local machine directory. Usually executed on first boot."
 recipe "db_sqlserver::drop", "Drops a database."
-recipe "db_sqlserver::import_dump_from_s3", 'Downloads SQL dump from S3 bucket and imports it into database.'
+recipe "db_sqlserver::import_s3_dump", 'Downloads MSSQL dump from S3 bucket and imports it into database.'
+recipe "db_sqlserver::import_local_dump", 'Imports a local MSSQL dump into the database.'
 recipe "db_sqlserver::enable_sql_service", "Enables the SQL Server service if disabled"
 recipe "db_sqlserver::restart_sql_service", "Restarts the MSSQL Server"
 recipe "db_sqlserver::enable_sql_mixed_mode_authentication", "Enables Mixed authentication for the SQL Server"
@@ -22,7 +23,7 @@ recipe "db_sqlserver::create_login", "Creates a login with password"
 attribute "db_sqlserver/server_name",
   :display_name => "SQL Server instance network name",
   :description => "The network name of the SQL Server instance used by recipes. Ex: 'localhost\\SQLEXPRESS' for SQL EXPRESS or 'localhost' for SQL STANDARD",
-  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore", "db_sqlserver::restore_once", "db_sqlserver::drop", "db_sqlserver::enable_sql_mixed_mode_authentication", "db_sqlserver::create_user", "db_sqlserver::create_login"],
+  :recipes => ["db_sqlserver::default", "db_sqlserver::import_s3_dump", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore", "db_sqlserver::restore_once", "db_sqlserver::drop", "db_sqlserver::enable_sql_mixed_mode_authentication", "db_sqlserver::create_user", "db_sqlserver::create_login", "db_sqlserver::import_local_dump"],
   :required => "required"
 
 attribute "db_sqlserver/database_name",
@@ -77,13 +78,20 @@ attribute "db_sqlserver/application_pass",
 attribute "s3/file_dump",
   :display_name => "Sql dump file",
   :description => "Sql dump file to be retrieved from the s3 bucket. Ex: production-dump.sql or production-dump.sql.zip",
-  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3"],
+  :recipes => ["db_sqlserver::import_s3_dump"],
   :required => "required"
+  
+attribute "import_local_dump/path",
+  :display_name => "Sql dump path",
+  :description => "The path to the MSSQL dump file to be imported into the database. Ex: c:\tmp\my-dump.sql",
+  :recipes => ["db_sqlserver::import_local_dump"],
+  :required => "required"
+
 
 attribute "s3/bucket_dump",
   :display_name => "Bucket for sql dump",
   :description => "The name of the S3 bucket. Ex: production-bucket-dumps",
-  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3"],
+  :recipes => ["db_sqlserver::import_s3_dump"],
   :required => "required"
 
 attribute "s3/bucket_backups",
@@ -95,11 +103,11 @@ attribute "s3/bucket_backups",
 attribute "aws/access_key_id",
   :display_name => "Access Key Id",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
-  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3", "db_sqlserver::backup_to_s3"],
+  :recipes => ["db_sqlserver::import_s3_dump", "db_sqlserver::backup_to_s3"],
   :required => "required"
   
 attribute "aws/secret_access_key",
   :display_name => "Secret Access Key",
   :description => "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
-  :recipes => ["db_sqlserver::default", "db_sqlserver::import_dump_from_s3", "db_sqlserver::backup_to_s3"],
+  :recipes => ["db_sqlserver::import_s3_dump", "db_sqlserver::backup_to_s3"],
   :required => "required"

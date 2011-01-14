@@ -6,11 +6,12 @@
       "db_sqlserver::restore": "Restores database from a local machine directory.",
       "db_sqlserver::backup_to_s3": "Backs up database to S3.",
       "db_sqlserver::enable_sql_service": "Enables the SQL Server service if disabled",
+      "db_sqlserver::import_s3_dump": "Downloads MSSQL dump from S3 bucket and imports it into database.",
       "db_sqlserver::restore_once": "Restores database from a local machine directory. Usually executed on first boot.",
       "db_sqlserver::restart_sql_service": "Restarts the MSSQL Server",
       "db_sqlserver::default": "Sets up default user and enables SQL service.",
+      "db_sqlserver::import_local_dump": "Imports a local MSSQL dump into the database.",
       "db_sqlserver::backup": "Backs up database to a local machine directory.",
-      "db_sqlserver::import_dump_from_s3": "Downloads SQL dump from S3 bucket and imports it into database.",
       "db_sqlserver::drop": "Drops a database."
     },
     "groupings": {
@@ -57,8 +58,7 @@
         "description": "Sql dump file to be retrieved from the s3 bucket. Ex: production-dump.sql or production-dump.sql.zip",
         "display_name": "Sql dump file",
         "recipes": [
-          "db_sqlserver::default",
-          "db_sqlserver::import_dump_from_s3"
+          "db_sqlserver::import_s3_dump"
         ],
         "required": "required"
       },
@@ -108,7 +108,7 @@
         "display_name": "SQL Server instance network name",
         "recipes": [
           "db_sqlserver::default",
-          "db_sqlserver::import_dump_from_s3",
+          "db_sqlserver::import_s3_dump",
           "db_sqlserver::backup",
           "db_sqlserver::backup_to_s3",
           "db_sqlserver::restore",
@@ -116,7 +116,8 @@
           "db_sqlserver::drop",
           "db_sqlserver::enable_sql_mixed_mode_authentication",
           "db_sqlserver::create_user",
-          "db_sqlserver::create_login"
+          "db_sqlserver::create_login",
+          "db_sqlserver::import_local_dump"
         ],
         "required": "required"
       },
@@ -143,8 +144,7 @@
         "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve you access identifiers. Ex: 1JHQQ4KVEVM02KVEVM02",
         "display_name": "Access Key Id",
         "recipes": [
-          "db_sqlserver::default",
-          "db_sqlserver::import_dump_from_s3",
+          "db_sqlserver::import_s3_dump",
           "db_sqlserver::backup_to_s3"
         ],
         "required": "required"
@@ -174,8 +174,7 @@
         "description": "This is an Amazon credential. Log in to your AWS account at aws.amazon.com to retrieve your access identifiers. Ex: XVdxPgOM4auGcMlPz61IZGotpr9LzzI07tT8s2Ws",
         "display_name": "Secret Access Key",
         "recipes": [
-          "db_sqlserver::default",
-          "db_sqlserver::import_dump_from_s3",
+          "db_sqlserver::import_s3_dump",
           "db_sqlserver::backup_to_s3"
         ],
         "required": "required"
@@ -232,6 +231,19 @@
         ],
         "required": "optional"
       },
+      "import_local_dump/path": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "The path to the MSSQL dump file to be imported into the database. Ex: c:\tmpmy-dump.sql",
+        "display_name": "Sql dump path",
+        "recipes": [
+          "db_sqlserver::import_local_dump"
+        ],
+        "required": "required"
+      },
       "s3/bucket_dump": {
         "calculated": false,
         "type": "string",
@@ -241,8 +253,7 @@
         "description": "The name of the S3 bucket. Ex: production-bucket-dumps",
         "display_name": "Bucket for sql dump",
         "recipes": [
-          "db_sqlserver::default",
-          "db_sqlserver::import_dump_from_s3"
+          "db_sqlserver::import_s3_dump"
         ],
         "required": "required"
       },

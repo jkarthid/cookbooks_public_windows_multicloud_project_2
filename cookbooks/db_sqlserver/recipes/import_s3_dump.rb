@@ -1,5 +1,3 @@
-# Cookbook Name:: db_sqlserver
-# Recipe:: import_dump_from_s3
 #
 # Copyright (c) 2010 RightScale Inc
 #
@@ -25,8 +23,8 @@
 unless (!@node[:s3][:file_dump].to_s.empty? && !@node[:s3][:bucket_dump].to_s.empty?)
   Chef::Log.info("*** Bucket or dump file not specified, skipping dump import...")
 else
-  if (@node[:db_sqlserver_import_dump_from_s3_executed])
-    Chef::Log.info("*** Recipe 'db_sqlserver::import_dump_from_s3' already executed, skipping...")
+  if (@node[:db_sqlserver_import_s3_dump_executed])
+    Chef::Log.info("*** Recipe 'db_sqlserver::import_s3_dump' already executed, skipping...")
   else
     # download the sql dump
     aws_s3 "Download SqlServer dump from S3 bucket" do
@@ -63,6 +61,6 @@ POWERSHELL_SCRIPT
       action :run_script
     end
   
-    @node[:db_sqlserver_import_dump_from_s3_executed] = true
+    @node[:db_sqlserver_import_s3_dump_executed] = true
   end
 end
