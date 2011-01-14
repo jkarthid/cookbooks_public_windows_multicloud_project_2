@@ -37,8 +37,8 @@ $statementTimeoutSeconds = Get-NewResource statement_timeout_seconds
 $Error.Clear()
 if (($maxoldbackups -eq $NULL) -or ($maxoldbackups -eq "") -or (!$maxoldbackups -match "^\d+$"))
 {
-    Write-Error "Error: 'max_old_backups_to_keep' is a required numeric attribute for the 'backup' provider. Aborting..."
-    exit 140
+    Write-Warning "'max_old_backups_to_keep' not defined, defaulting to 24"
+    $maxoldbackups = 24
 }
 
 # check if database exists before backing up.

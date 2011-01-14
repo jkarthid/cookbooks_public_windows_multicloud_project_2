@@ -201,6 +201,7 @@
         "required": "required"
       },
       "db_sqlserver/backup/backups_to_keep": {
+        "default": "24",
         "calculated": false,
         "type": "string",
         "choice": [
@@ -212,7 +213,7 @@
           "db_sqlserver::backup",
           "db_sqlserver::backup_to_s3"
         ],
-        "required": "required"
+        "required": "optional"
       },
       "db_sqlserver/backup/database_backup_dir": {
         "default": "c:\\datastore\\sqlserver\\databases",
@@ -237,7 +238,7 @@
         "choice": [
 
         ],
-        "description": "The path to the MSSQL dump file to be imported into the database. Ex: c:\tmpmy-dump.sql",
+        "description": "The path to the MSSQL dump file to be imported into the database. Ex: c:\\tmp\\my-dump.sql",
         "display_name": "Sql dump path",
         "recipes": [
           "db_sqlserver::import_local_dump"

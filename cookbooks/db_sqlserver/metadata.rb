@@ -53,8 +53,8 @@ attribute "db_sqlserver/backup/existing_backup_file_name_pattern",
 attribute "db_sqlserver/backup/backups_to_keep",
   :display_name => "Old backups to keep",
   :description => "Defines the number of old backups to keep. Ex: 30",
-  :recipes => ["db_sqlserver::backup", "db_sqlserver::backup_to_s3"],
-  :required => "required"
+  :default => "24",
+  :recipes => ["db_sqlserver::backup", "db_sqlserver::backup_to_s3"]
 
 attribute "db_sqlserver/restore/force_restore",
   :display_name => "Force restore",
@@ -83,7 +83,7 @@ attribute "s3/file_dump",
   
 attribute "import_local_dump/path",
   :display_name => "Sql dump path",
-  :description => "The path to the MSSQL dump file to be imported into the database. Ex: c:\tmp\my-dump.sql",
+  :description => "The path to the MSSQL dump file to be imported into the database. Ex: c:\\tmp\\my-dump.sql",
   :recipes => ["db_sqlserver::import_local_dump"],
   :required => "required"
 
