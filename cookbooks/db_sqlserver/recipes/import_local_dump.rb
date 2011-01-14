@@ -28,7 +28,7 @@ else
   else
 
     #Chef::Log.info("*** Unpacking database dump.")
-    powershell "Copying "+@node[:import_local_dump][:path]+"to c:\tmp" do
+    powershell "Copy "+@node[:import_local_dump][:path]+" to c:/tmp/mssql-renamed.sql" do
       parameters({'DUMP_PATH' => @node[:import_local_dump][:path]})
       # Create the powershell script
       powershell_script = <<'POWERSHELL_SCRIPT'
@@ -40,7 +40,6 @@ else
           {
             Write-output("*** MSSQL dump full path found ["+$dump_path+"], copying dump to c:/tmp/mssql-renamed.sql")
             copy-item $dump_path c:/tmp/mssql-renamed.sql
-            write-output $error
           }
           else
           {
