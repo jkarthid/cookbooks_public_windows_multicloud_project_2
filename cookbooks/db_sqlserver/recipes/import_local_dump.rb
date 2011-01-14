@@ -34,7 +34,7 @@ else
       powershell_script = <<'POWERSHELL_SCRIPT'
           New-Item  c:\tmp -type directory -ErrorAction SilentlyContinue
           $release_path = Get-ChildItem -force "c:\Inetpub\releases" | Where-Object { ($_.Attributes -match "Directory") } | Sort-Object -descending | Select-Object FullName | Select-Object -first 1
-          $dump_path = Join-Path $release_path ${env:DUMP_PATH}
+          $dump_path = Join-Path $release_path.FullName ${env:DUMP_PATH}
           if (test-path $dump_path)
           {
             Write-output "*** MSSQL dump full path found [$dump_path], copying dump to c:/tmp/mssql-renamed.sql"
