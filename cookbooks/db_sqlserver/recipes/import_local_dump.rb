@@ -33,16 +33,18 @@ else
       # Create the powershell script
       powershell_script = <<'POWERSHELL_SCRIPT'
           New-Item  c:\tmp -type directory -ErrorAction SilentlyContinue
+          $Error.Clear()
           $release_path = Get-ChildItem -force "c:\Inetpub\releases" | Where-Object { ($_.Attributes -match "Directory") } | Sort-Object -descending | Select-Object FullName | Select-Object -first 1
           $dump_path = Join-Path $release_path.FullName ${env:DUMP_PATH}
           if (test-path $dump_path)
           {
-            Write-output "*** MSSQL dump full path found [$dump_path], copying dump to c:/tmp/mssql-renamed.sql"
+            Write-output("*** MSSQL dump full path found ["+$dump_path+"], copying dump to c:/tmp/mssql-renamed.sql")
             copy-item $dump_path c:/tmp/mssql-renamed.sql
+            write-output $error
           }
           else
           {
-            Write-Error("Error: The MSSQL dump file "+${env:DUMP_PATH}+" was not found in the latest release directory ($release_path)")
+            Write-Error("Error: The MSSQL dump file "+${env:DUMP_PATH}+" was not found in the latest release directory ("+$release_path.FullPath+")")
             exit 137
           }
 POWERSHELL_SCRIPT
