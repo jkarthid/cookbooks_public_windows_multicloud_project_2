@@ -83,7 +83,7 @@ attribute "s3/file_dump",
   
 attribute "import_local_dump/path",
   :display_name => "Sql dump path",
-  :description => "The path to the MSSQL dump file to be imported into the database. Ex: c:\\tmp\\my-dump.sql",
+  :description => "Path to the mssql dump relative to the code checkout folder. Ex: db\\mssql-dump.sql",
   :recipes => ["db_sqlserver::import_local_dump"],
   :required => "required"
 

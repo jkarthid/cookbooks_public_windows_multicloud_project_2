@@ -26,11 +26,34 @@ else
   if (@node[:db_sqlserver_import_local_dump_executed])
     Chef::Log.info("*** Recipe 'db_sqlserver::import_local_dump' already executed, skipping...")
   else
+
+    #Chef::Log.info("*** Unpacking database dump.")
+    powershell "Copying "+@node[:import_local_dump][:path]+"to c:\tmp" do
+      parameters({'DUMP_PATH' => @node[:import_local_dump][:path]})
+      # Create the powershell script
+      powershell_script = <<'POWERSHELL_SCRIPT'
+          New-Item  c:\tmp -type directory -ErrorAction SilentlyContinue
+          $release_path = Get-ChildItem -force "c:\Inetpub\releases" | Where-Object { ($_.Attributes -match "Directory") } | Sort-Object -descending | Select-Object FullName | Select-Object -first 1
+          $dump_path = Join-Path $release_path ${env:DUMP_PATH}
+          if (test-path $dump_path)
+          {
+            Write-output "*** MSSQL dump full path found [$dump_path], copying dump to c:/tmp/mssql-renamed.sql"
+            copy-item $dump_path c:/tmp/mssql-renamed.sql
+          }
+          else
+          {
+            Write-Error("Error: The MSSQL dump file "+${env:DUMP_PATH}+" was not found in the latest release directory ($release_path)")
+            exit 137
+          }
+POWERSHELL_SCRIPT
+      source(powershell_script)
+    end
+    
     # load the initial demo database from deployed SQL script.
     # no schema provided for this import call
     db_sqlserver_database "noschemayet" do
       server_name @node[:db_sqlserver][:server_name]
-      script_path @node[:import_local_dump][:path]
+      script_path "c:/tmp/mssql-renamed.sql"
       action :run_script
     end
 
