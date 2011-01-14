@@ -30,7 +30,7 @@ else
     # no schema provided for this import call
     db_sqlserver_database "noschemayet" do
       server_name @node[:db_sqlserver][:server_name]
-      script_path "c:/tmp/"+sql_dump
+      script_path @node[:import_local_dump][:path]
       action :run_script
     end
 
