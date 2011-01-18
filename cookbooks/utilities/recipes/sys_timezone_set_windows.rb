@@ -18,9 +18,24 @@ powershell "Sets Windows Timezone" do
 	
 
 	# Set the Timezone using input variable
-
+	switch ($env:TIMEZONE) 
+	{
+		"US/Central" {$tzset="Central Standard Time"}
+		"GMT" {$tzset="GMT Standard Time"}
+		"UTC" {$tzset="UTC"}
+		"Europe/Helsinki" {$tzset="FLE Standard Time"}
+		"Europe/Moscow" {$tzset="Russian Standard Time"}
+		"US/Mountain" {$tzset="Mountain Standard Time"}
+		"US/Pacific" {$tzset="Pacific Standard Time"}
+		"US/Eastern" {$tzset="Eastern Standard Time"}
+		"Europe/London" {$tzset="GMT Standard Time"}
+		"Europe/Paris" {$tzset="Romance Standard Time"}
+		default { $tzset = "UTC" } 
+	}
+	
+	
 	cd "$env:ATTACHMENTS_PATH"
-	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -RedirectStandardOutput "output.txt" -ArgumentList """$env:TIMEZONE"""
+	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -RedirectStandardOutput "output.txt" -ArgumentList """$tzset"""
 	$output = gc ".\output.txt"
 	Write-Host $output
  
