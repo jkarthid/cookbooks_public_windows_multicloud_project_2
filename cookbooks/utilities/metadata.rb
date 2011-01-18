@@ -28,7 +28,7 @@ attribute "utilities/timezone",
   :description => "New Timezone",
   :recipes => ["utilities::sys_timezone_set_windows", "utilities::sys_timezone_set_windows"],
   :required => "required",
-  :choice => \[ 'US\/Central', 'GMT', 'UTC', 'Europe\/Helsinki','Europe\/Moscow','US\/Mountain','US\/Pacific','US\/Eastern','Europe\/London','Europe\/Paris' \]  
+  :choice => [ "US/Central", "GMT", "UTC", "Europe/Helsinki","Europe/Moscow","US/Mountain","US/Pacific","US/Eastern","Europe/London","Europe/Paris" ]  
 
 attribute "schtasks/command",
   :display_name => "Task command",
