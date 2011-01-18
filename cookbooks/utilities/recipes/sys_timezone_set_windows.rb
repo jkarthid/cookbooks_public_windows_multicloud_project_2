@@ -5,6 +5,7 @@
 #
 # All rights reserved
 
+
 powershell "Sets Windows Timezone" do
   attachments_path = File.expand_path(File.join(File.dirname(__FILE__), '..', 'files', 'sys_timezone_set_windows'))
   parameters({'ATTACHMENTS_PATH' => attachments_path,'TIMEZONE' => @node[:utilities][:timezone]})
@@ -12,7 +13,9 @@ powershell "Sets Windows Timezone" do
   
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
-  
+    # Execute only on first boot
+    if ($env:RS_REBOOT -eq $true) { exit 0 } 
+	
     # Set Error action preference
 	$errorActionPreference = "stop"
 	
@@ -38,7 +41,12 @@ powershell "Sets Windows Timezone" do
 	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -RedirectStandardOutput "output.txt" -ArgumentList """$tzset"""
 	$output = gc ".\output.txt"
 	Write-Host $output
- 
+
+	# For some reason RightNet doesn't seem to recognize that the TimezoneTool EXE has finished 
+	# execution and quit with a status code of 0. Since this script runs only on first boot
+	# restarting the instance allows it to reach an operational state
+
+	Restart-Computer -Force
 POWERSHELL_SCRIPT
 
   source(powershell_script)
