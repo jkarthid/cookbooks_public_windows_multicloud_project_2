@@ -80,6 +80,20 @@
       "description": "New administrator password",
       "display_name": "New administrator password"
     },
+    "utilities/timezone": {
+      "required": "required",
+      "calculated": false,
+      "choice": [
+
+      ],
+      "type": "string",
+      "recipes": [
+        "utilities::sys_timezone_set_windows"
+      ],
+      "description": "New Timezone",
+      "display_name": "New Timezone"
+    },
+	
     "schtasks\/hourly_frequency": {
       "required": "required",
       "calculated": false,

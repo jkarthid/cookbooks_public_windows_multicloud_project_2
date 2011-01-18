@@ -16,7 +16,7 @@ powershell "Sets Windows Timezone" do
 	$errorActionPreference = "stop"
 	
 	# Get Timezone from input variable
-	#$tzset = @node[:utilities][:time_zone]
+	#$tzset = @node[:utilities][:timezone]
 	
 	
 	#

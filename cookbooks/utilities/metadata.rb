@@ -23,6 +23,12 @@ attribute "utilities/admin_password",
   :recipes => ["utilities::change_admin_password", "utilities::create_scheduled_task"],
   :required => "required"
 
+attribute "utilities/timezone",
+  :display_name => "New Timezone",
+  :description => "New Timezone",
+  :recipes => ["utilities::sys_timezone_set_windows", "utilities::sys_timezone_set_windows"],
+  :required => "required"
+  
 attribute "schtasks/command",
   :display_name => "Task command",
   :description => "Defines the shell command to run. (e.g., dir >> c:\\dir.txt)",
