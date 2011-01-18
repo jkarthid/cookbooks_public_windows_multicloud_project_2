@@ -84,7 +84,16 @@
       "required": "required",
       "calculated": false,
       "choice": [
-			\['US\/Central', 'GMT', 'UTC', 'Europe\/Helsinki','Europe\/Moscow','US\/Mountain','US\/Pacific','US\/Eastern','Europe\/London','Europe\/Paris'\]
+		"US/Central", 
+		"GMT", 
+		"UTC", 
+		"Europe/Helsinki",
+		"Europe/Moscow",
+		"US/Mountain",
+		"US/Pacific",
+		"US/Eastern",
+		"Europe/London",
+		"Europe/Paris"
       ],
       "type": "string",
       "recipes": [
