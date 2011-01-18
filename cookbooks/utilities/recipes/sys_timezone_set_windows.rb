@@ -46,7 +46,7 @@ powershell "Sets Windows Timezone" do
 	# execution and quit with a status code of 0. Since this script runs only on first boot
 	# restarting the instance allows it to reach an operational state
 
-	Restart-Computer -Force
+	#Restart-Computer -Force
 POWERSHELL_SCRIPT
 
   source(powershell_script)
