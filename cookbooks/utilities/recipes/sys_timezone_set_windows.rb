@@ -26,7 +26,7 @@ powershell "Sets Windows Timezone" do
 	cd "$env:ATTACHMENTS_PATH"
 	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -RedirectStandardOutput "output.txt" -ArgumentList '"Pacific Standard Time"'
 	$output = gc ".\output.txt"
-	Chef::Log.info($output)
+	Write-Host $output
  
 POWERSHELL_SCRIPT
 
