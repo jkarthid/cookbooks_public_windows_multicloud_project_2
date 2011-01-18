@@ -16,13 +16,8 @@ powershell "Sets Windows Timezone" do
     # Set Error action preference
 	$errorActionPreference = "stop"
 	
-	# Get Timezone from input variable
-	
-	
-	
-	#
-	# Set the Timezone
-	#
+
+	# Set the Timezone using input variable
 
 	cd "$env:ATTACHMENTS_PATH"
 	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -RedirectStandardOutput "output.txt" -ArgumentList """$env:TIMEZONE"""
