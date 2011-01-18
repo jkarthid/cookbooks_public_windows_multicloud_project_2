@@ -25,7 +25,7 @@ powershell "Sets Windows Timezone" do
 	#
 
 	cd "$env:ATTACHMENTS_PATH"
-	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -RedirectStandardOutput "output.txt" -ArgumentList '"$env:TIMEZONE"'
+	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -RedirectStandardOutput "output.txt" -ArgumentList """$env:TIMEZONE"""
 	$output = gc ".\output.txt"
 	Write-Host $output
  
