@@ -36,10 +36,11 @@ powershell "Sets Windows Timezone" do
 		default { $tzset = "UTC" } 
 	}
 	
-	echo "before timezone" > \tmp\timezone.txt
+	echo "before timezone" >> \tmp\timezone.txt
 	cd "$env:ATTACHMENTS_PATH"
 	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -RedirectStandardOutput "output.txt" -ArgumentList """$tzset"""
-	echo "after timezone" > \tmp\timezone.txt
+	echo "after timezone" >> \tmp\timezone.txt
+start-sleep -seconds 30
 	$output = gc ".\output.txt"
 	Write-Host $output
 
