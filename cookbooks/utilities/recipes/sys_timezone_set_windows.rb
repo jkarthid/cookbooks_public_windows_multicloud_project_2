@@ -42,6 +42,9 @@ powershell "Sets Windows Timezone" do
 	$output = gc ".\output.txt"
 	Write-Host $output
 
+$Error.Clear()
+exit 0
+
 	# For some reason RightNet doesn't seem to recognize that the TimezoneTool EXE has finished 
 	# execution and quit with a status code of 0. Since this script runs only on first boot
 	# restarting the instance allows it to reach an operational state
