@@ -38,12 +38,6 @@ powershell "Sets Windows Timezone" do
 	
 	cd "$env:ATTACHMENTS_PATH"
 	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -ArgumentList """$tzset"""
-
-	# For some reason RightNet doesn't seem to recognize that the TimezoneTool EXE has finished 
-	# execution and quit with a status code of 0. Since this script runs only on first boot
-	# restarting the instance allows it to reach an operational state
-
-	#Restart-Computer -Force
 POWERSHELL_SCRIPT
 
   source(powershell_script)
