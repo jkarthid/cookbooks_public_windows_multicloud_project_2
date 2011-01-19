@@ -36,16 +36,8 @@ powershell "Sets Windows Timezone" do
 		default { $tzset = "UTC" } 
 	}
 	
-	echo "before timezone" >> \tmp\timezone.txt
 	cd "$env:ATTACHMENTS_PATH"
-	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -RedirectStandardOutput "output.txt" -ArgumentList """$tzset"""
-	echo "after timezone" >> \tmp\timezone.txt
-start-sleep -seconds 30
-	$output = gc ".\output.txt"
-	Write-Host $output
-
-$Error.Clear()
-exit 0
+	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -ArgumentList """$tzset"""
 
 	# For some reason RightNet doesn't seem to recognize that the TimezoneTool EXE has finished 
 	# execution and quit with a status code of 0. Since this script runs only on first boot
