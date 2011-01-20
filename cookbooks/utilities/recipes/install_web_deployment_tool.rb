@@ -1,5 +1,5 @@
 # Cookbook Name:: utilities
-# Recipe:: sys_timezone_set_windows
+# Recipe:: Installs Web Deployment Tool
 #
 # Copyright 2010, RightScale, Inc.
 #
@@ -7,8 +7,8 @@
 
 
 powershell "Installs Web Deployment Tool" do
-  attachments_path = File.expand_path(File.join(File.dirname(__FILE__), '..', 'files', 'sys_timezone_set_windows'))
-  parameters({'ATTACHMENTS_PATH' => attachments_path,'TIMEZONE' => @node[:utilities][:timezone]})
+  attachments_path = File.expand_path(File.join(File.dirname(__FILE__), '..', 'files', 'install_web_deployment_tool'))
+  parameters({'ATTACHMENTS_PATH' => attachments_path})
 
   
   # Create the powershell script
@@ -19,25 +19,9 @@ powershell "Installs Web Deployment Tool" do
     # Set Error action preference
 	$errorActionPreference = "stop"
 	
-
-	# Set the Timezone using input variable
-	switch ($env:TIMEZONE) 
-	{
-		"US/Central" {$tzset="Central Standard Time"}
-		"GMT" {$tzset="GMT Standard Time"}
-		"UTC" {$tzset="UTC"}
-		"Europe/Helsinki" {$tzset="FLE Standard Time"}
-		"Europe/Moscow" {$tzset="Russian Standard Time"}
-		"US/Mountain" {$tzset="Mountain Standard Time"}
-		"US/Pacific" {$tzset="Pacific Standard Time"}
-		"US/Eastern" {$tzset="Eastern Standard Time"}
-		"Europe/London" {$tzset="GMT Standard Time"}
-		"Europe/Paris" {$tzset="Romance Standard Time"}
-		default { $tzset = "UTC" } 
-	}
-	
+	# Install Web Deployment Tool
 	cd "$env:ATTACHMENTS_PATH"
-	Start-Process -FilePath ".\TimezoneTool.exe" -RedirectStandardError "error.txt" -ArgumentList """$tzset"""
+	.\WebDeploy_x86_en-US.msi /quiet
 POWERSHELL_SCRIPT
 
   source(powershell_script)
