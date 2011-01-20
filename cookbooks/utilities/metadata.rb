@@ -15,7 +15,7 @@ recipe "utilities::create_scheduled_task", "Creates the 'rs_scheduled_task' sche
 recipe "utilities::delete_scheduled_task", "Deletes the 'rs_scheduled_task' scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command"
 recipe "utilities::online_attached_drives", "Change 'Offline' status to 'Online' for the attached drives"
 recipe "utilities::sys_timezone_set_windows", "Set timezone on Windows Servers"
-
+recipe "utilities::install_web_deployment_tool", "Installs Microsoft Web Deployment Tool"
 
 attribute "utilities/admin_password",
   :display_name => "New administrator password",

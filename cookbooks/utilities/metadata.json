@@ -9,7 +9,8 @@
     "utilities::create_scheduled_task": "Creates the 'rs_scheduled_task' scheduled task under the 'administrator' user. Uses the SCHTASKS Windows command",
     "utilities::change_admin_password": "Changes the administrator password",
     "utilities::system_shutdown": "Shuts down the system",
-	"utilities::sys_timezone_set_windows":"Set timezone on Windows Servers"
+	"utilities::sys_timezone_set_windows":"Set timezone on Windows Servers",
+	"utilities::install_web_deployment_tool":"Installs Microsoft Web Deployment Tool"
   },
   "conflicting": {
 
