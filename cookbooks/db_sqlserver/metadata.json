@@ -6,7 +6,7 @@
       "db_sqlserver::restore": "Restores database from a local machine directory.",
       "db_sqlserver::backup_to_s3": "Backs up database to S3.",
       "db_sqlserver::enable_sql_service": "Enables the SQL Server service if disabled",
-      "db_sqlserver::import_s3_dump": "Downloads MSSQL dump from S3 bucket and imports it into database.",
+      "db_sqlserver::import_s3_dump": "Downloads MSSQL dump from S3 bucket and imports it into the database.",
       "db_sqlserver::restore_once": "Restores database from a local machine directory. Usually executed on first boot.",
       "db_sqlserver::restart_sql_service": "Restarts the MSSQL Server",
       "db_sqlserver::default": "Sets up default user and enables SQL service.",

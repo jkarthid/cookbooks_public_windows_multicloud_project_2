@@ -12,7 +12,7 @@ recipe "db_sqlserver::backup_to_s3", "Backs up database to S3."
 recipe "db_sqlserver::restore", "Restores database from a local machine directory."
 recipe "db_sqlserver::restore_once", "Restores database from a local machine directory. Usually executed on first boot."
 recipe "db_sqlserver::drop", "Drops a database."
-recipe "db_sqlserver::import_s3_dump", 'Downloads MSSQL dump from S3 bucket and imports it into database.'
+recipe "db_sqlserver::import_s3_dump", 'Downloads MSSQL dump from S3 bucket and imports it into the database.'
 recipe "db_sqlserver::import_local_dump", 'Imports a local MSSQL dump into the database.'
 recipe "db_sqlserver::enable_sql_service", "Enables the SQL Server service if disabled"
 recipe "db_sqlserver::restart_sql_service", "Restarts the MSSQL Server"

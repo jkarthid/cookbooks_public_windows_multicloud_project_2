@@ -43,7 +43,7 @@ else
           }
           else
           {
-            Write-Error("Error: The MSSQL dump file "+${env:DUMP_PATH}+" was not found in the latest release directory ("+$release_path.FullPath+")")
+            Write-Error("Error: The MSSQL dump file "+${env:DUMP_PATH}+" was not found in the latest release directory ("+$release_path.FullName+")")
             exit 137
           }
 POWERSHELL_SCRIPT
