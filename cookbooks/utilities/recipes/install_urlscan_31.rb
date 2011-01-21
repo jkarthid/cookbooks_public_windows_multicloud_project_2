@@ -24,11 +24,11 @@ powershell "Installs URLScan 3.1" do
 	$os_arch = (gwmi win32_OperatingSystem).OSArchitecture
 	if ($os_arch -eq "64-bit")
 	{
-		.\urlscan_v31_x86.msi /quiet
+		.\urlscan_v31_x64.msi /quiet
 	}
 	else
 	{
-		.\urlscan_v31_x64.msi /quiet
+		.\urlscan_v31_x86.msi /quiet
 	}
 
 POWERSHELL_SCRIPT
