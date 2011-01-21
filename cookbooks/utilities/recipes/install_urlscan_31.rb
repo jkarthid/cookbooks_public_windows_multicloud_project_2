@@ -31,6 +31,20 @@ powershell "Installs URLScan 3.1" do
 		.\urlscan_v31_x86.msi /quiet
 	}
 
+    # Verify Installation was successfull
+    
+    $product_name = "Microsoft UrlScan Filter v3.1"
+    $check_installed = gwmi win32_product | where {$_.name -like $product_name}
+
+    if ($check_installed -eq $null )
+    {
+        Write-Output "Error: Installation Failed!"
+        Exit 1
+    }
+    else
+    {
+        Write-Output "Installation was successful for: $product_name"
+    }
 POWERSHELL_SCRIPT
 
   source(powershell_script)

@@ -31,6 +31,20 @@ powershell "Installs Web Deployment Tool" do
 		.\iis7psprov_x86.msi /quiet
 	}
 
+    # Verify Installation was successful
+    $product_name = "Microsoft Windows PowerShell snap-in for IIS 7.0"
+    $check_installed = gwmi win32_product | where {$_.name -like $product_name}
+
+    if ($check_installed -eq $null )
+    {
+        Write-Output "Error: Installation Failed!"
+        Exit 1
+    }
+    else
+    {
+        Write-Output "Installation was successful for: $product_name"
+    }
+
 POWERSHELL_SCRIPT
 
   source(powershell_script)
