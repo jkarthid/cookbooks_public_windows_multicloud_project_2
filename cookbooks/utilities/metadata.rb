@@ -16,7 +16,7 @@ recipe "utilities::delete_scheduled_task", "Deletes the 'rs_scheduled_task' sche
 recipe "utilities::online_attached_drives", "Change 'Offline' status to 'Online' for the attached drives"
 recipe "utilities::sys_timezone_set_windows", "Set timezone on Windows Servers"
 recipe "utilities::install_web_deployment_tool", "Installs Microsoft Web Deployment Tool"
-recipe "utilities::install_iis_powershel_snapin", "Installs the IIS Powershell Snapin for Windows Server 2008"
+recipe "utilities::install_iis_powershell_snapin", "Installs the IIS Powershell Snapin for Windows Server 2008"
 
 attribute "utilities/admin_password",
   :display_name => "New administrator password",
