@@ -147,7 +147,8 @@
         "description": "Full path to the IIS Web Deploy Package containing an IIS web server dump. For E.g. C:\myfiles\myapp.zip",
         "display_name": "IIS Web Deploy Package",
         "recipes": [
-          "app_iis::msdeploy_iis_deploy"
+          "app_iis::msdeploy_iis_deploy",
+          "app_iis::msdeploy_iis_archive"
         ],
         "required": "required"
       }      

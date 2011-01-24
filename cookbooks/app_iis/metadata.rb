@@ -12,7 +12,7 @@ recipe "app_iis::update_code_svn", "Retrieves code from SVN then sets up website
 recipe "app_iis::update_code_s3", "Retrieves code from s3 then sets up website."
 recipe "app_iis::start_default_website", "Starts the website named 'Default Web Site' if it is not already running"
 recipe "app_iis::msdeploy_iis_deploy", "Uses an IIS Web Deploy archive to deploy code to an IIS 7 web server."
-
+recipe "app_iis::msdeploy_iis_archive", "Creates an IIS Web Deploy package of the local web server."
 
 attribute "svn/repo_path",
   :display_name => "SVN Repo Path",
@@ -69,5 +69,5 @@ attribute "s3/application_code_bucket",
 attribute "app_iis/iis_package",
   :display_name => "IIS Web Deploy Package",
   :description => "Full path to the IIS Web Deploy Package containing an IIS web server dump. For E.g. C:\myfiles\myapp.zip",
-  :recipes => ["app_iis::msdeploy_iis_deploy"],
+  :recipes => ["app_iis::msdeploy_iis_deploy","app_iis::msdeploy_iis_archive"],
   :required => "required"
