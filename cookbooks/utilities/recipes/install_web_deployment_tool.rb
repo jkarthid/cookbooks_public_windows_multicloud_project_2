@@ -24,7 +24,7 @@ powershell "Installs Web Deployment Tool" do
 	$os_arch = (gwmi win32_OperatingSystem).OSArchitecture
 	if ($os_arch -eq "64-bit")
 	{
-		.\WebDeploy_x64_en-US.msi/quiet
+		.\WebDeploy_x64_en-US.msi /quiet
 	}
 	else
     {    
