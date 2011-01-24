@@ -21,7 +21,31 @@ powershell "Installs Web Deployment Tool" do
 	
 	# Install Web Deployment Tool
 	cd "$env:ATTACHMENTS_PATH"
-	.\WebDeploy_x86_en-US.msi /quiet
+	$os_arch = (gwmi win32_OperatingSystem).OSArchitecture
+	if ($os_arch -eq "64-bit")
+	{
+		.\WebDeploy_x64_en-US.msi/quiet
+	}
+	else
+    {    
+        .\WebDeploy_x86_en-US.msi /quiet
+    }
+    
+    
+    # Verify Installation was successful
+    $product_name = "Microsoft Web Deploy 2.0"
+    $check_installed = gwmi win32_product | where {$_.name -like $product_name}
+
+    if ($check_installed -eq $null)
+    {
+        Write-Output "Error: Installation Failed!"
+        Exit 1
+    }
+    else
+    {
+        Write-Output "Installation was successful for: $product_name"
+    }
+
 POWERSHELL_SCRIPT
 
   source(powershell_script)
