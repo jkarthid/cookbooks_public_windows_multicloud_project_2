@@ -13,6 +13,10 @@ powershell "Installs Web Deployment Tool" do
   
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
+  
+    #Tell the script to "stop" or "continue" when a command fails
+    $ErrorActionPreference = "stop"
+    
     # Execute only on first boot
     if ($env:RS_REBOOT -eq $true) { exit 0 } 
 	
