@@ -11,9 +11,10 @@ recipe "app_iis::default", "Calls app_iis::update_code_svn"
 recipe "app_iis::update_code_svn", "Retrieves code from SVN then sets up website."
 recipe "app_iis::update_code_s3", "Retrieves code from s3 then sets up website."
 recipe "app_iis::start_default_website", "Starts the website named 'Default Web Site' if it is not already running"
-recipe "app_iis::msdeploy_iis_deploy", "Uses an IIS Web Deploy archive to deploy code to an IIS 7 web server."
-recipe "app_iis::msdeploy_iis_archive", "Creates an IIS Web Deploy package of the local web server."
-recipe "app_iis::msdeploy_sql_archive", "Creates an IIS Web Deploy package from a SQL Server."
+recipe "app_iis::msdeploy_iis_deploy", "Uses an IIS Web Deploy archive to deploy code to an IIS 7 web server"
+recipe "app_iis::msdeploy_iis_archive", "Creates an IIS Web Deploy package of the local web server"
+recipe "app_iis::msdeploy_sql_archive", "Creates an IIS Web Deploy package from a SQL Server"
+recipe "app_iis::msdeploy_sql_deploy", "Restores an IIS Web Deploy SQL package to an SQL server"
 
 attribute "svn/repo_path",
   :display_name => "SVN Repo Path",

@@ -6,7 +6,7 @@
 # All rights reserved
 
 # start the default website
-powershell "Creates an IIS Web Deploy package from a SQL Server." do
+powershell "Restores an IIS Web Deploy SQL package to an SQL server" do
   parameters({'SQL_PACKAGE' => @node[:app_iis][:sql_package], 'DATABASE_NAME' => @node[:app_iis][:database_name],'SQL_INSTANCE_NAME' => @node[:app_iis][:sql_instance_name]})
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
@@ -20,13 +20,12 @@ powershell "Creates an IIS Web Deploy package from a SQL Server." do
     # Create MS SQL connection string
     $SQLConnectionString = "Data Source=$env:SQL_INSTANCE_NAME;Integrated Security=SSPI;Initial Catalog=$env:DATABASE_NAME"
 
-    # Create archive folder
+    # Find archive folder
     $SQL_PACKAGE_FOLDER = split-path $env:SQL_PACKAGE
-    mkdir -force $SQL_PACKAGE_FOLDER
     cd $SQL_PACKAGE_FOLDER
     
     # Setup MS deploy arguments
-    $msdeployArguments = "-verb:sync -source:dbFullSql=`"$SQLConnectionString`" -dest:package=$env:SQL_PACKAGE"
+    $msdeployArguments = "-verb:sync -source:package=$env:SQL_PACKAGE -dest:dbFullSql=`"$SQLConnectionString`""
 
     # Run web deploy
     Start-Process `
