@@ -33,6 +33,7 @@ powershell "Installs Web Deployment Tool" do
     
     
     # Verify Installation was successful
+    Sleep 120 # wait for installation to complete
     $product_name = "*Web Deploy*"
     $check_installed = gwmi win32_product | where {$_.name -like $product_name}
 
