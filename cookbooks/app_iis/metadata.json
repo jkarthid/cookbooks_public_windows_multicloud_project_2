@@ -5,7 +5,8 @@
       "app_iis::update_code_svn": "Retrieves code from SVN then sets up website.",
       "app_iis::update_code_s3": "Retrieves code from s3 then sets up website.",
       "app_iis::msdeploy_iis_deploy": "Uses an IIS Web Deploy archive to deploy code to an IIS 7 web server.",
-      "app_iis::msdeploy_iis_archive": "Creates an IIS Web Deploy package of the local web server."
+      "app_iis::msdeploy_iis_archive": "Creates an IIS Web Deploy package of the local web server.",
+      "app_iis::msdeploy_sql_archive": "Creates an IIS Web Deploy package from a SQL Server."
     },
     "groupings": {
     },
@@ -145,11 +146,50 @@
         "choice": [
 
         ],
-        "description": "Full path to the IIS Web Deploy Package containing an IIS web server dump. For E.g. C:\myfiles\myapp.zip",
+        "description": "Full path to the IIS Web Deploy Package containing an IIS web server dump. For E.g. C:\\myfiles\\myapp.zip",
         "display_name": "IIS Web Deploy Package",
         "recipes": [
           "app_iis::msdeploy_iis_deploy",
           "app_iis::msdeploy_iis_archive"
+        ],
+        "required": "required"
+      },
+      "app_iis/sql_package": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Full path to the IIS Web Deploy SQL Package file. For E.g. C:\\myfiles\\mydata.zip",
+        "display_name": "IIS Web Deploy SQL Package",
+        "recipes": [
+          "app_iis::msdeploy_sql_archive"
+        ],
+        "required": "required"
+      },
+      "app_iis/sql_instance_name": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "SQL instance that will be used to deploy to/from using msdeploy. For E.g. .\SQLExpress or .",
+        "display_name": "SQL Instance name",
+        "recipes": [
+          "app_iis::msdeploy_sql_archive"
+        ],
+        "required": "required"
+      },
+      "app_iis/database_name": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Name of the database on an SQL that will be the source/target of an msdeploy. For E.g. app_test",
+        "display_name": "Database Name",
+        "recipes": [
+          "app_iis::msdeploy_sql_archive"
         ],
         "required": "required"
       }      
