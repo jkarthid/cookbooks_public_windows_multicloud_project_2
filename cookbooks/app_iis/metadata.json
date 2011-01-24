@@ -7,7 +7,7 @@
         "app_iis::msdeploy_iis_deploy": "Uses an IIS Web Deploy archive to deploy code to an IIS 7 web server",
         "app_iis::msdeploy_iis_archive": "Creates an IIS Web Deploy package of the local web server",
         "app_iis::msdeploy_sql_archive": "Creates an IIS Web Deploy package from a SQL Server",
-        "app_iis::msdeploy_sql_deploy", "Restores an IIS Web Deploy SQL package to an SQL server"
+        "app_iis::msdeploy_sql_deploy": "Restores an IIS Web Deploy SQL package to an SQL server"
     },
     "groupings": {
     },
