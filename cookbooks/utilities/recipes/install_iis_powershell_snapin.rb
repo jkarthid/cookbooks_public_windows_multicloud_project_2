@@ -6,7 +6,7 @@
 # All rights reserved
 
 
-powershell "Installs Web Deployment Tool" do
+powershell "Installs IIS7 Powershell Snap-In" do
   attachments_path = File.expand_path(File.join(File.dirname(__FILE__), '..', 'files', 'install_iis_powershell_snapin'))
   parameters({'ATTACHMENTS_PATH' => attachments_path})
 
@@ -38,6 +38,7 @@ powershell "Installs Web Deployment Tool" do
 	}
 
     # Verify Installation was successful
+    Sleep 120 # Wait for installation to finish
     $product_name = "Microsoft Windows PowerShell snap-in for IIS 7.0"
     $check_installed = gwmi win32_product | where {$_.name -like $product_name}
 
