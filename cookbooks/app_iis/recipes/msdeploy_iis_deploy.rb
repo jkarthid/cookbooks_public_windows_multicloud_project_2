@@ -7,7 +7,7 @@
 
 # start the default website
 powershell "Use Microsoft Web Deploy to deploy package to local web server" do
-  parameters({'IIS_PACKAGE' => @node[:utilities][:IIS_PACKAGE]})
+  parameters({'IIS_PACKAGE' => @node[:app_iis][:IIS_PACKAGE]})
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
     #tell the script to "stop" or "continue" when a command fails
