@@ -32,7 +32,7 @@ powershell "Creates an IIS Web Deploy package of the local web server" do
     Start-Process `
             -FilePath "$msdeployPath\msdeploy.exe" `
             -ArgumentList $msdeployArguments `
-            -WorkingDirectory "$IIS_PACKAGE_FOLDER" `
+            -WorkingDirectory "$SQL_PACKAGE_FOLDER" `
             -RedirectStandardError stderr.txt `
             -RedirectStandardOutput stdout.txt `
             -Wait
