@@ -10,9 +10,11 @@ powershell "Installs Web Deployment Tool" do
   attachments_path = File.expand_path(File.join(File.dirname(__FILE__), '..', 'files', 'install_iis_powershell_snapin'))
   parameters({'ATTACHMENTS_PATH' => attachments_path})
 
-  
-  # Create the powershell script
-  powershell_script = <<'POWERSHELL_SCRIPT'
+  if (@node[:install_iis_web_deployment_tool_executed])
+    Chef::Log.info("*** Recipe 'db_sqlserver::create_login' already executed, skipping...")
+  else
+    # Create the powershell script
+    powershell_script = <<'POWERSHELL_SCRIPT'
   
     #Tell the script to "stop" or "continue" when a command fails
     $ErrorActionPreference = "stop"
@@ -51,5 +53,8 @@ powershell "Installs Web Deployment Tool" do
 
 POWERSHELL_SCRIPT
 
-  source(powershell_script)
+    source(powershell_script)
+    @node[:install_iis_web_deployment_tool_executed] = true
+
+  end
 end
