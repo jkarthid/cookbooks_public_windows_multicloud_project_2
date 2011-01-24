@@ -11,7 +11,7 @@ powershell "Installs IIS7 Powershell Snap-In" do
   parameters({'ATTACHMENTS_PATH' => attachments_path})
 
   if (@node[:install_iis_web_deployment_tool_executed])
-    Chef::Log.info("*** Recipe 'db_sqlserver::create_login' already executed, skipping...")
+    Chef::Log.info("*** Recipe already executed, skipping...")
   else
     # Create the powershell script
     powershell_script = <<'POWERSHELL_SCRIPT'
