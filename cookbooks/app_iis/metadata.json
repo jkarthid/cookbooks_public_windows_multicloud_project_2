@@ -3,7 +3,8 @@
       "app_iis::default": "Calls app_iis::update_code_svn",
       "app_iis::start_default_website": "Starts the website named 'Default Web Site' if it is not already running",
       "app_iis::update_code_svn": "Retrieves code from SVN then sets up website.",
-      "app_iis::update_code_s3": "Retrieves code from s3 then sets up website."
+      "app_iis::update_code_s3": "Retrieves code from s3 then sets up website.",
+      "app_iis::msdeploy_iis_deploy": "Uses an IIS Web Deploy archive to deploy code to an IIS 7 web server."
     },
     "groupings": {
     },
@@ -136,7 +137,20 @@
           "app_iis::update_code_svn"
         ],
         "required": "required"
-      }
+      },
+      "app_iis/iis_package": {
+        "calculated": false,
+        "type": "string",
+        "choice": [
+
+        ],
+        "description": "Full path to the IIS Web Deploy Package containing an IIS web server dump. For E.g. C:\myfiles\myapp.zip",
+        "display_name": "IIS Web Deploy Package",
+        "recipes": [
+          "app_iis::msdeploy_iis_deploy"
+        ],
+        "required": "required"
+      }      
     },
     "replacing": {
     }
