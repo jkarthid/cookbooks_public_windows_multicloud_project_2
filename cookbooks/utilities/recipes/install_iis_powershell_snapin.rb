@@ -10,7 +10,7 @@ powershell "Installs IIS7 Powershell Snap-In" do
   attachments_path = File.expand_path(File.join(File.dirname(__FILE__), '..', 'files', 'install_iis_powershell_snapin'))
   parameters({'ATTACHMENTS_PATH' => attachments_path})
 
-  if (@node[:install_iis_web_deployment_tool_executed])
+  if (@node[:install_iis_powershell_snapin_executed])
     Chef::Log.info("*** Recipe already executed, skipping...")
   else
     # Create the powershell script
@@ -55,7 +55,7 @@ powershell "Installs IIS7 Powershell Snap-In" do
 POWERSHELL_SCRIPT
 
     source(powershell_script)
-    @node[:install_iis_web_deployment_tool_executed] = true
+    @node[:install_iis_powershell_snapin_executed] = true
 
   end
 end
