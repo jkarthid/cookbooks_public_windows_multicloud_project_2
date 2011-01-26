@@ -1,7 +1,4 @@
-# Cookbook Name:: db_sqlserver
-# Recipe:: restore
-#
-# Copyright (c) 2010 RightScale Inc
+# Copyright (c) 20101 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -22,14 +19,16 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# Restore database
-db_sqlserver_database @node[:db_sqlserver][:database_name] do
-  machine_type = @node[:kernel][:machine]
-
-  backup_dir_path @node[:db_sqlserver][:backup][:database_backup_dir]
-  existing_backup_file_name_pattern @node[:db_sqlserver][:backup][:existing_backup_file_name_pattern]
-  server_name @node[:db_sqlserver][:server_name]
-  force_restore @node[:db_sqlserver][:restore][:force_restore] == 'true'
-
-  action :restore
+# Restore databases(s)
+@node[:db_sqlserver][:database_name].split(',').each do |database_name|
+  db_sqlserver_database database_name do
+    machine_type = @node[:kernel][:machine]
+  
+    backup_dir_path @node[:db_sqlserver][:backup][:database_backup_dir]
+    existing_backup_file_name_pattern @node[:db_sqlserver][:backup][:existing_backup_file_name_pattern]
+    server_name @node[:db_sqlserver][:server_name]
+    force_restore @node[:db_sqlserver][:restore][:force_restore] == 'true'
+  
+    action :restore
+  end
 end

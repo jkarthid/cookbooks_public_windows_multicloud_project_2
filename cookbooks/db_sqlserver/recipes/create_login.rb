@@ -1,7 +1,4 @@
-# Cookbook Name:: db_sqlserver
-# Recipe:: create_login
-#
-# Copyright (c) 2010 RightScale Inc
+# Copyright (c) 2011 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -25,12 +22,13 @@
 if (@node[:db_sqlserver_create_login_executed])
   Chef::Log.info("*** Recipe 'db_sqlserver::create_login' already executed, skipping...")
 else
-  # Create login
-  db_sqlserver_database @node[:db_sqlserver][:database_name] do
+  # Create a login
+  db_sqlserver_database @node[:db_sqlserver][:database_name].split(',')[0] do
     server_name @node[:db_sqlserver][:server_name]
-    commands ["CREATE LOGIN "+@node[:db_sqlserver][:application_user]+" WITH PASSWORD = '"+@node[:db_sqlserver][:application_pass]+"';",
-              "ALTER LOGIN "+@node[:db_sqlserver][:application_user]+" WITH CHECK_EXPIRATION = OFF;",
-              "ALTER LOGIN "+@node[:db_sqlserver][:application_user]+" WITH CHECK_POLICY = OFF;"]
+    commands ["IF EXISTS(SELECT * FROM sys.syslogins WHERE name = N'"+@node[:db_sqlserver][:application_user]+"') DROP LOGIN \""+@node[:db_sqlserver][:application_user]+"\";",
+    "CREATE LOGIN \""+@node[:db_sqlserver][:application_user]+"\" WITH PASSWORD = '"+@node[:db_sqlserver][:application_pass]+"';",
+              "ALTER LOGIN \""+@node[:db_sqlserver][:application_user]+"\" WITH CHECK_EXPIRATION = OFF;",
+              "ALTER LOGIN \""+@node[:db_sqlserver][:application_user]+"\" WITH CHECK_POLICY = OFF;"]
     action :run_command
   end
 

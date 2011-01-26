@@ -67,7 +67,7 @@ if ($backupFile = $backupFiles[-1])
         $restoredFilePath = Get-ChefNode ($nodePath + "restore_file_paths" + $backupFileName.ToLower())
         if ($restoredFilePath)
         {
-            Write-Warning "Not restoring ""$backupFilePath"" because an equivalent database was already restored from ""$restoredFilePath""."
+            Write-Warning "Not restoring ""$backupFilePath"" because an equivalent database was already restored from ""$restoredFilePath"". Use the 'force_restore' input to override this check."
             exit 0
         }
     }

@@ -58,6 +58,6 @@ POWERSHELL_SCRIPT
       action :run_script
     end
 
-    @node[:db_sqlserver_import_dump_from_s3_executed] = true
+    @node[:db_sqlserver_import_local_dump_executed] = true
   end
 end

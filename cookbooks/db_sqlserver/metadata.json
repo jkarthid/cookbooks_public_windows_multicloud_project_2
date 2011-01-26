@@ -18,7 +18,7 @@
     },
     "recommendations": {
     },
-    "version": "0.4.0",
+    "version": "0.4.1",
     "maintainer": "RightScale, Inc.",
     "long_description": "= DESCRIPTION:\n\nSQL Server Recipes and Providers\n\n= REQUIREMENTS:\n\nUse on a RightImage which includes SQL Server (2005 or 2008, Express or Standard).\n\n= USAGE:\n\nDesigned to be run within a RightScale ServerTemplate.\n\n",
     "description": "Microsoft SQL Server recipes and providers",
@@ -185,7 +185,7 @@
         "choice": [
 
         ],
-        "description": "SQL Server database(schema) name. Ex: production",
+        "description": "SQL Server database(schema) name. Use a comma-separated list when multiple databases are used. Ex: app_test1,app_test2",
         "display_name": "SQL Server database name",
         "recipes": [
           "db_sqlserver::default",

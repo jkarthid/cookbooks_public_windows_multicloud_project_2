@@ -1,7 +1,4 @@
-# Cookbook Name:: db_sqlserver
-# Recipe:: default
-#
-# Copyright (c) 2010 RightScale Inc
+# Copyright (c) 2011 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -25,13 +22,15 @@
 if (@node[:db_sqlserver_default_executed])
   Chef::Log.info("*** Recipe 'db_sqlserver::default' already executed, skipping...")
 else
-  # Create default user
-  db_sqlserver_database @node[:db_sqlserver][:database_name] do
-    server_name @node[:db_sqlserver][:server_name]
-    commands ["CREATE USER [NetworkService] FOR LOGIN [NT AUTHORITY\\NETWORK SERVICE]",
-              "EXEC sp_addrolemember 'db_datareader', 'NetworkService'",
-              "EXEC sp_addrolemember 'db_datawriter', 'NetworkService'"]
-    action :run_command
+  # Create default user for each database
+  @node[:db_sqlserver][:database_name].split(',').each do |database_name|
+    db_sqlserver_database database_name do
+      server_name @node[:db_sqlserver][:server_name]
+      commands ["CREATE USER [NetworkService] FOR LOGIN [NT AUTHORITY\\NETWORK SERVICE]",
+                "EXEC sp_addrolemember 'db_datareader', 'NetworkService'",
+                "EXEC sp_addrolemember 'db_datawriter', 'NetworkService'"]
+      action :run_command
+    end
   end
 
   @node[:db_sqlserver_default_executed] = true

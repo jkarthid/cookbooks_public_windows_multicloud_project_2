@@ -3,7 +3,7 @@ maintainer_email "support@rightscale.com"
 license          IO.read(File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'LICENSE')))
 description      "Microsoft SQL Server recipes and providers"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.rdoc'))
-version          "0.4.0"
+version          "0.4.1"
 
 
 recipe 'db_sqlserver::default', 'Sets up default user and enables SQL service.'
@@ -28,7 +28,7 @@ attribute "db_sqlserver/server_name",
 
 attribute "db_sqlserver/database_name",
   :display_name => "SQL Server database name",
-  :description => "SQL Server database(schema) name. Ex: production",
+  :description => "SQL Server database(schema) name. Use a comma-separated list when multiple databases are used. Ex: app_test1,app_test2",
   :recipes => ["db_sqlserver::default", "db_sqlserver::backup", "db_sqlserver::backup_to_s3", "db_sqlserver::restore", "db_sqlserver::restore_once", "db_sqlserver::drop", "db_sqlserver::enable_sql_mixed_mode_authentication", "db_sqlserver::create_user", "db_sqlserver::create_login"],
   :required => "required"
 

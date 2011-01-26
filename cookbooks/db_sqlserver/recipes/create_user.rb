@@ -1,7 +1,4 @@
-# Cookbook Name:: db_sqlserver
-# Recipe:: create_user
-#
-# Copyright (c) 2010 RightScale Inc
+# Copyright (c) 2011 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -25,14 +22,16 @@
 if (@node[:db_sqlserver_create_user_executed])
   Chef::Log.info("*** Recipe 'db_sqlserver::create_user' already executed, skipping...")
 else
-  # Create user
-  db_sqlserver_database @node[:db_sqlserver][:database_name] do
-    server_name @node[:db_sqlserver][:server_name]
-    commands ["IF EXISTS (SELECT * FROM sys.database_principals WHERE name = N'"+@node[:db_sqlserver][:application_user]+"') DROP USER "+@node[:db_sqlserver][:application_user]+";",
-              "CREATE USER "+@node[:db_sqlserver][:application_user]+" FOR LOGIN "+@node[:db_sqlserver][:application_user]+";",
-              "EXEC sp_addrolemember 'db_datareader', '"+@node[:db_sqlserver][:application_user]+"';",
-              "EXEC sp_addrolemember 'db_datawriter', '"+@node[:db_sqlserver][:application_user]+"';"]
-    action :run_command
+  # Create the user for each database
+	@node[:db_sqlserver][:database_name].split(',').each do |database_name|
+    db_sqlserver_database database_name do
+      server_name @node[:db_sqlserver][:server_name]
+      commands ["IF EXISTS (SELECT * FROM sys.database_principals WHERE name = N'"+@node[:db_sqlserver][:application_user]+"') DROP USER \""+@node[:db_sqlserver][:application_user]+"\";",
+                "CREATE USER \""+@node[:db_sqlserver][:application_user]+"\" FOR LOGIN \""+@node[:db_sqlserver][:application_user]+"\";",
+                "EXEC sp_addrolemember 'db_datareader', '"+@node[:db_sqlserver][:application_user]+"';",
+                "EXEC sp_addrolemember 'db_datawriter', '"+@node[:db_sqlserver][:application_user]+"';"]
+      action :run_command
+    end
   end
 
   @node[:db_sqlserver_create_user_executed] = true

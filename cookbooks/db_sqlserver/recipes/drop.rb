@@ -22,8 +22,10 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# Drop database
-db_sqlserver_database @node[:db_sqlserver][:database_name] do
-  server_name @node[:db_sqlserver][:server_name]
-  action :drop
+# Drop database(s)
+@node[:db_sqlserver][:database_name].split(',').each do |database_name|
+  db_sqlserver_database database_name do
+    server_name @node[:db_sqlserver][:server_name]
+    action :drop
+  end
 end

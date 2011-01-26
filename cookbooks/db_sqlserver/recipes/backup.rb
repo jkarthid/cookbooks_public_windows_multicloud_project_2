@@ -1,6 +1,3 @@
-# Cookbook Name:: db_sqlserver
-# Recipe:: backup_to_s3
-#
 # Copyright (c) 2010 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
@@ -22,17 +19,18 @@
 # OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-# Backup database 
-db_sqlserver_database @node[:db_sqlserver][:database_name] do
-  machine_type = @node[:kernel][:machine]
-
-  backup_dir_path @node[:db_sqlserver][:backup][:database_backup_dir]
-  backup_file_name_format @node[:db_sqlserver][:backup][:backup_file_name_format]
-  existing_backup_file_name_pattern @node[:db_sqlserver][:backup][:existing_backup_file_name_pattern]
-  server_name @node[:db_sqlserver][:server_name]
-  force_restore false
-  zip_backup false
-  max_old_backups_to_keep @node[:db_sqlserver][:backup][:backups_to_keep]
-
-  action :backup
+# Backup database(s)
+@node[:db_sqlserver][:database_name].split(',').each do |database_name|
+  db_sqlserver_database database_name do
+    machine_type = @node[:kernel][:machine]
+  
+    backup_dir_path @node[:db_sqlserver][:backup][:database_backup_dir]
+    backup_file_name_format @node[:db_sqlserver][:backup][:backup_file_name_format]
+    existing_backup_file_name_pattern @node[:db_sqlserver][:backup][:existing_backup_file_name_pattern]
+    server_name @node[:db_sqlserver][:server_name]
+    zip_backup false
+    max_old_backups_to_keep @node[:db_sqlserver][:backup][:backups_to_keep]
+  
+    action :backup
+  end
 end

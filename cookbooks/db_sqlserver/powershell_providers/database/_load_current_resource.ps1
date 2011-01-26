@@ -1,4 +1,4 @@
-# Copyright (c) 2010 RightScale Inc
+# Copyright (c) 2011 RightScale Inc
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -26,20 +26,6 @@ $dbName = Get-NewResource name
 $nodePath = $cookbookName,$resourceName,$dbName
 $serverName = Get-NewResource server_name
 
-# initialize hash representing current state of database, if necessary.
-$dbData = Get-ChefNode $nodePath
-if ($dbData -eq $NULL)
-{
-    $dbData = @{ exists = $False }
-    Set-ChefNode $nodePath -HashValue $dbData
-    Write-Verbose "Initialized ""$nodePath"""
-}
-else
-{
-    Write-Warning "Skipping initialization of ""$nodePath"""
-    exit 0
-}
-
 # connect to server.
 $server = New-Object ("Microsoft.SqlServer.Management.Smo.Server") $serverName
 
@@ -51,6 +37,25 @@ if ($Error.count -ne 0)
     Write-Error "Failed to connect to ""$serverName"""
     exit 100
 }
+
+# initialize hash representing current state of database, if necessary.
+$dbData = Get-ChefNode $nodePath
+if ($dbData -eq $NULL)
+{
+    $dbData = @{ exists = $False }
+    Set-ChefNode $nodePath -HashValue $dbData
+    Write-Verbose "Initialized ""$nodePath"""
+}
+else
+{
+    if (!($db))
+    {
+      Set-ChefNode ($nodePath + "exists") $null
+    }
+    Write-Warning "Skipping initialization of ""$nodePath"""
+    exit 0
+}
+
 if ($db)
 {
     # set "exists".
