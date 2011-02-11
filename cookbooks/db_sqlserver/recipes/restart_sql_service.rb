@@ -27,11 +27,13 @@ powershell "Restart the MSSQL Server" do
   # Create the powershell script
   powershell_script = <<'POWERSHELL_SCRIPT'
     $sqlServiceName='MSSQL$SQLEXPRESS'
-    $serviceController = get-service $sqlServiceName 2> $null
+    $serviceController = get-service $sqlServiceName -ErrorAction SilentlyContinue
+    $Error.Clear()
     if ($Null -eq $serviceController)
     {
         $sqlServiceName='MSSQLSERVER'
-        $serviceController = get-service $sqlServiceName 2> $null
+        $serviceController = get-service $sqlServiceName -ErrorAction SilentlyContinue
+        $Error.Clear()
         if ($Null -eq $serviceController)
         {
             Write-Error "SQL Server service is not installed"
@@ -45,7 +47,8 @@ powershell "Restart the MSSQL Server" do
     }
     else
     {
-        net stop $sqlServiceName
+        #stop the SQL Server and all the dependent services
+        net stop $sqlServiceName /yes
         net start $sqlServiceName
     }
 POWERSHELL_SCRIPT
