@@ -18,6 +18,7 @@ recipe "utilities::sys_timezone_set_windows", "Set timezone on Windows Servers"
 recipe "utilities::install_web_deployment_tool", "Installs Microsoft Web Deployment Tool"
 recipe "utilities::install_iis_powershell_snapin", "Installs the IIS Powershell Snapin for Windows Server 2008"
 recipe "utilities::install_urlscan_31", "Installs URLScan 3.1"
+recipe "utilities::install_iis_arr", "Installs IIS Application Request Routing Vresion 2.1.0856"
 
 attribute "utilities/admin_password",
   :display_name => "New administrator password",
